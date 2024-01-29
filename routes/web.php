@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ChildController;
@@ -48,6 +49,15 @@ Route::group([
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::group([
+    'prefix' => 'schedule',
+    'as' => 'schedule.',
+    'middleware' => ['auth', 'verified']
+], function () {
+    Route::get('/', [ScheduleController::class, 'index'])->name('index');
+    Route::get('/{schedule}', [ScheduleController::class, 'edit'])->name('edit');
 });
 
 require __DIR__ . '/auth.php';
