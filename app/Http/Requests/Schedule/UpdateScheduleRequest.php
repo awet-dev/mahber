@@ -27,11 +27,11 @@ class UpdateScheduleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'time' => ['required', 'datetime'],
+            'time' => ['required', 'date'],
             'name' => ['required', 'string'],
             'description' => ['required', 'string'],
-            'group' => Rule::in(Group::toArray()),
-            'user_id' => ['required', Rule::exists('users', 'id')],
+            'group' => Rule::in(Group::toArray(true)),
+            'user_id' => [Rule::exists('users', 'id')],
         ];
     }
 }

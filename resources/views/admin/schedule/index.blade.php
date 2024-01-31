@@ -4,6 +4,11 @@
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 {{ __('Schedules') }}
             </h2>
+
+            <x-colored-link
+                href="{{ route('admin.schedules.create') }}">
+                create
+            </x-colored-link>
         </div>
     </x-slot>
 
@@ -25,14 +30,28 @@
                                 <x-table-tr>
                                     <x-slot name="table_td">
                                         <x-table-td>{{ $schedule->name }}</x-table-td>
-                                        <x-table-td>{{ $schedule->Group }}</x-table-td>
+                                        <x-table-td>{{ $schedule->group }}</x-table-td>
                                         <x-table-td>{{ $schedule->time->toDateString() }}</x-table-td>
                                         <x-table-td>{{ $schedule->updated_at->diffForHumans() }}</x-table-td>
                                         <x-table-td>
-                                            <x-colored-link
-                                                href="{{ route('schedules.edit', ['schedule' => $schedule->id]) }}">
-                                                edit
-                                            </x-colored-link>
+                                            <form method="post"
+                                                  action="{{ route('admin.schedules.destroy', ['schedule' => $schedule->id]) }}"
+                                                  class="p-6">
+                                                @csrf
+                                                @method('delete')
+
+                                                <div class="flex gap-3">
+                                                    <x-colored-link
+                                                        href="{{ route('admin.schedules.edit', ['schedule' => $schedule->id]) }}">
+                                                        edit
+                                                    </x-colored-link>
+
+                                                    <button type="submit">
+                                                        <x-xmark-icon/>
+                                                    </button>
+
+                                                </div>
+                                            </form>
                                         </x-table-td>
                                     </x-slot>
                                 </x-table-tr>

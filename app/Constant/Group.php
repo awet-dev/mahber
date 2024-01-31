@@ -6,14 +6,20 @@ use ReflectionClass;
 
 class Group
 {
-    const WOMEN = 'women';
-    const MEN = 'men';
-    const CHILDREN = 'children';
+    const All = 'All';
+    const Parents = 'Parents';
+    const Men = 'Men';
+    const Women = 'Women';
+    const Children = 'Children';
 
-    public static function toArray(): array
+    public static function toArray(bool $only_name = false): array
     {
         $oClass = new ReflectionClass(__CLASS__);
 
-        return $oClass->getConstants();
+        $constants = $oClass->getConstants();
+
+        return $only_name
+            ? array_keys($constants)
+            : $constants;
     }
 }

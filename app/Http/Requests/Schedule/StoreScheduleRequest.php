@@ -27,10 +27,10 @@ class StoreScheduleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'time' => ['required', 'datetime'],
+            'time' => ['required', 'date'],
             'name' => ['required', 'string'],
             'description' => ['required', 'string'],
-            'group' => Rule::in(Group::toArray()),
+            'group' => Rule::in(Group::toArray(true)),
             'user_id' => ['required', Rule::exists('users', 'id')],
         ];
     }

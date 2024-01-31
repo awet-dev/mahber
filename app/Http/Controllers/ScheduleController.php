@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Constant\Group;
 use App\Models\Schedule;
+use App\Models\User;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
-use App\Http\Requests\Schedule\StoreScheduleRequest;
 use App\Http\Requests\Schedule\UpdateScheduleRequest;
 
 class ScheduleController extends Controller
@@ -14,23 +17,12 @@ class ScheduleController extends Controller
      */
     public function index(): View
     {
-        return view('schedule.index');
-    }
+        /** @var User $user */
+        $user = Auth::user();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreScheduleRequest $request)
-    {
-        //
+        return view('schedule.index', [
+            'schedules' => $user->schedules
+        ]);
     }
 
     /**
@@ -38,24 +30,25 @@ class ScheduleController extends Controller
      */
     public function edit(Schedule $schedule): View
     {
+        $user = $schedule->user;
+
         return view('schedule.detail', [
-            'schedule' => $schedule
+            'schedule' => $schedule,
+            'users' => [$user->id => $user->name],
+            'groups' => Group::toArray()
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateScheduleRequest $request, Schedule $schedule)
+    public function update(UpdateScheduleRequest $request, Schedule $schedule): RedirectResponse
     {
-        //
-    }
+        $validated = $request->validated();
+        $updated = $schedule->update($validated);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Schedule $schedule)
-    {
-        //
+        return to_route('schedules.edit', [
+            'schedule' => $schedule->id,
+        ])->with('updated', $updated);
     }
 }

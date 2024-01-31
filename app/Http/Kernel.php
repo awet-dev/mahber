@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\EnsureUserHasRole;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\TrustProxies;
@@ -87,5 +88,6 @@ class Kernel extends HttpKernel
         'signed' => ValidateSignature::class,
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
+        'has_role' => EnsureUserHasRole::class,
     ];
 }

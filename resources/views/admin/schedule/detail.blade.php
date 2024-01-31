@@ -6,7 +6,7 @@
             </h2>
 
             <x-colored-link
-                href="{{ route('schedules.index') }}">
+                href="{{ route('admin.schedules.index') }}">
                 index
             </x-colored-link>
         </div>
@@ -16,7 +16,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <form method="POST" action="{{ route('schedules.update', ['schedule' => $schedule->id]) }}">
+                    <form method="POST" action="{{ route('admin.schedules.update', ['schedule' => $schedule->id]) }}">
                         @csrf
                         @method('PUT')
 
@@ -39,9 +39,8 @@
                         <div class="md:flex flex-row gap-2 mb-3">
                             <div class="w-full">
                                 <x-input-label for="user_id" :value="__('User')"/>
-                                <x-select-input id="user_id" class="block mt-1 w-full" name="user_id" disabled
+                                <x-select-input id="user_id" class="block mt-1 w-full" name="user_id"
                                                 :value="old('user_id', $schedule->user_id)" :options="$users"/>
-                                <small class="text-info">Only ADMIN can update user</small>
                                 <x-input-error :messages="$errors->get('user_id')" class="mt-2"/>
                             </div>
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -52,12 +53,33 @@ Route::group([
 });
 
 Route::group([
-    'prefix' => 'schedule',
-    'as' => 'schedule.',
+    'prefix' => 'schedules',
+    'as' => 'schedules.',
     'middleware' => ['auth', 'verified']
 ], function () {
     Route::get('/', [ScheduleController::class, 'index'])->name('index');
-    Route::get('/{schedule}', [ScheduleController::class, 'edit'])->name('edit');
+    Route::put('/{schedule}', [ScheduleController::class, 'update'])->name('update');
+    Route::get('/{schedule}/edit', [ScheduleController::class, 'edit'])->name('edit');
+});
+
+
+Route::group([
+    'prefix' => 'admin',
+    'as' => 'admin.',
+    'middleware' => ['auth', 'verified', 'has_role:admin']
+], function () {
+
+    Route::group([
+        'prefix' => 'schedules',
+        'as' => 'schedules.',
+    ], function () {
+        Route::get('/', [AdminController::class, 'indexSchedule'])->name('index');
+        Route::post('/', [AdminController::class, 'storeSchedule'])->name('store');
+        Route::get('/create', [AdminController::class, 'createSchedule'])->name('create');
+        Route::put('/{schedule}', [AdminController::class, 'updateSchedule'])->name('update');
+        Route::delete('/{schedule}', [AdminController::class, 'destroySchedule'])->name('destroy');
+        Route::get('/{schedule}/edit', [AdminController::class, 'editSchedule'])->name('edit');
+    });
 });
 
 require __DIR__ . '/auth.php';

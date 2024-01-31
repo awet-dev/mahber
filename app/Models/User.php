@@ -18,6 +18,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property Collection $attendances
  * @property Collection<Payment> $payments
  * @property string $email
+ * @property Collection<Schedule> $schedules
+ * @property Collection<Role> $roles
  * @method static create(array $attributes)
  */
 class User extends Authenticatable implements MustVerifyEmail

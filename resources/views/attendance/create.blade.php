@@ -19,14 +19,9 @@
                     <form method="POST" action="{{ route('attendances.store') }}">
                         @csrf
                         <div class="mb-4">
-                            <div class="relative" data-te-input-wrapper-init>
-                            <textarea id="description" rows="3" name="description"
-                                      class="peer block min-h-[auto] w-full rounded border-0 bg-transparent px-3 py-[0.32rem] leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200 dark:placeholder:text-neutral-200 [&:not([data-te-input-placeholder-active])]:placeholder:opacity-0"
-                            >{{ old('description') }}</textarea>
-                                <label for="description"
-                                       class="pointer-events-none absolute left-3 top-0 mb-0 max-w-[90%] origin-[0_0] truncate pt-[0.37rem] leading-[1.6] text-neutral-500 transition-all duration-200 ease-out peer-focus:-translate-y-[0.9rem] peer-focus:scale-[0.8] peer-focus:text-primary peer-data-[te-input-state-active]:-translate-y-[0.9rem] peer-data-[te-input-state-active]:scale-[0.8] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary"
-                                >Absence reason</label>
-                            </div>
+                            <x-input-label for="description" :value="__('Description')"/>
+                            <x-textarea-input id="description" class="block mt-1 w-full" name="description"
+                                              :value="old('description')"/>
                             <x-input-error :messages="$errors->get('description')" class="mt-2"/>
                         </div>
 
